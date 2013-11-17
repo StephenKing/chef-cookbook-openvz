@@ -18,3 +18,5 @@
 #
 Chef::Log.debug "Node acting as openvz #{node[:virtualization][:role]}"
 include_recipe "openvz::#{node[:virtualization][:role]}"
+
+include_recipe "openvz::set-masterserver"
