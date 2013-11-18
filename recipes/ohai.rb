@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: openvz
-# Recipe:: guest
+# Recipe:: ohai
 #
 # Copyright 2013, TYPO3 Association
 #
@@ -17,4 +17,14 @@
 # limitations under the License.
 #
 
-include_recipe "openvz::ohai"
+ohai "reload_openvz" do
+  plugin "openvz-hostdetection"
+  action :nothing
+end
+
+template "#{node[:ohai][:plugin_path]}/openvz-hostdetection.rb" do
+  source "ohai/openvz-hostdetection.rb"
+  notifies :reload, "ohai[reload_openvz]"
+end
+
+include_recipe "ohai::default"

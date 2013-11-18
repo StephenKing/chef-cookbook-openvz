@@ -1,7 +1,3 @@
-#
-# Cookbook Name:: openvz
-# Recipe:: guest
-#
 # Copyright 2013, TYPO3 Association
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +13,17 @@
 # limitations under the License.
 #
 
-include_recipe "openvz::ohai"
+provides "virtualization/host"
+
+Ohai::Log.debug "Ohai openvz-hostdetection"
+
+openvz_metadata_from_hints = hint?('openvz-host')
+
+if openvz_metadata_from_hints
+  Ohai::Log.debug "Have openvz-host hint"
+  host Mash.new
+  virtualization[:host] = openvz_metadata_from_hints['host']
+  Ohai::Log.debug "Set virtualization[:host] to '#{openvz_metadata_from_hints['host']}'"
+else
+  Ohai::Log.debug "No openvz-host hint"
+end

@@ -8,3 +8,4 @@ version          "1.0.0"
 
 supports         "debian", ">= 6.0"
 depends          "chef-sugar"
+depends          "ohai"
